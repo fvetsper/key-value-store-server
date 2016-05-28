@@ -1,6 +1,4 @@
-package home.client;
-
-import home.commons.Action;
+package home.commons;
 
 import java.util.List;
 

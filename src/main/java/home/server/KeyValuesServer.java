@@ -7,6 +7,8 @@ public class KeyValuesServer {
 
 	public static void main(String[] args) throws IOException {
 
+		KeyValuesHandler keyValuesHandler = new KeyValuesHandler();
+		
 		if (args.length != 1) {
 			System.err.println("Usage: java KeyValuesServer <port number>");
 			System.exit(1);
@@ -17,7 +19,7 @@ public class KeyValuesServer {
 
 		try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
 			while (listening) {
-				new KeyValuesServerThread(serverSocket.accept()).start();
+				new KeyValuesServerThread(serverSocket.accept(), keyValuesHandler).start();
 			}
 		} catch (IOException e) {
 			System.err.println("Could not listen on port " + portNumber);

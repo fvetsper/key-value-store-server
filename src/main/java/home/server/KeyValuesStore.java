@@ -3,6 +3,7 @@ package home.server;
 import home.commons.KeyValues;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class KeyValuesStore {
@@ -16,8 +17,8 @@ public class KeyValuesStore {
 		keyValuesStorage.createStorage();
 	}
 	
+	
 	public KeyValues read(String key) {
-		
 		if (keyValuesCache.containsKey(key)) {
 			return keyValuesCache.get(key);
 		} 
@@ -26,6 +27,15 @@ public class KeyValuesStore {
 			keyValuesCache.put(key, keyValues);
 		}
 		return keyValues;
+		
+	}
+	
+	public List<KeyValues> readAll() {
+		List<KeyValues> keyValuesList = keyValuesStorage.readAllFromStorage();
+		for (KeyValues keyValues : keyValuesList) {
+			keyValuesCache.put(keyValues.getKey(), keyValues);
+		}
+		return keyValuesList;
 		
 	}
 	
