@@ -1,12 +1,13 @@
 package home.server;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import home.commons.Action;
 import home.commons.KeyValues;
 import home.commons.Request;
 import home.commons.Response;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 
 public class KeyValuesHandler {
@@ -24,7 +25,7 @@ public class KeyValuesHandler {
 			case GET_ALL_KEYS: {
 				List<KeyValues> filteredKeyValuesList = new ArrayList<KeyValues>();
 				String pattern = request.getPattern();
-				List<KeyValues> keyValuesList = keyValuesStore.readAll();
+				Set<KeyValues> keyValuesList = keyValuesStore.readAll();
 				for (KeyValues keyValues : keyValuesList) {
 					if(keyValues.getKey().contains(pattern)) {
 						filteredKeyValuesList.add(keyValues);

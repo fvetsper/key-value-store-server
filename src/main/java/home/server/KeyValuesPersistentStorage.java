@@ -10,12 +10,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class KeyValuesPersistentStorage {
@@ -42,8 +42,8 @@ public class KeyValuesPersistentStorage {
 	}
 	
 	
-	public List<KeyValues> readAllFromStorage() {
-		List<KeyValues> keyValuesList = new ArrayList<KeyValues>();
+	public Set<KeyValues> readAllFromStorage() {
+		Map<String, KeyValues> keyValuesMap = new HashMap<String, KeyValues>();
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(storage));
@@ -51,7 +51,7 @@ public class KeyValuesPersistentStorage {
 			ObjectMapper mapper = new ObjectMapper();
 		    while ((line = br.readLine()) != null) {
 		    	KeyValues keyValues = mapper.readValue(line, KeyValues.class);
-		    	keyValuesList.add(keyValues);
+		    	keyValuesMap.put(keyValues.getKey(), keyValues);
 		    }
 		    if (br != null) {
 		    	br.close();
@@ -61,7 +61,7 @@ public class KeyValuesPersistentStorage {
 		} catch (IOException e) {
 			System.err.println("couldn't read from storage file. reason: " + e.getMessage());
 		}
-		return keyValuesList;
+		return new HashSet<KeyValues>(keyValuesMap.values());
 	}
 	
 	public KeyValues readFromStorage(String key) {

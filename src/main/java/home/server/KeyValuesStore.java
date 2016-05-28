@@ -5,6 +5,7 @@ import home.commons.KeyValues;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class KeyValuesStore {
 	
@@ -30,8 +31,8 @@ public class KeyValuesStore {
 		
 	}
 	
-	public List<KeyValues> readAll() {
-		List<KeyValues> keyValuesList = keyValuesStorage.readAllFromStorage();
+	public Set<KeyValues> readAll() {
+		Set<KeyValues> keyValuesList = keyValuesStorage.readAllFromStorage();
 		for (KeyValues keyValues : keyValuesList) {
 			keyValuesCache.put(keyValues.getKey(), keyValues);
 		}
