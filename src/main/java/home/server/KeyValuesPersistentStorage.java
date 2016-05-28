@@ -30,6 +30,17 @@ public class KeyValuesPersistentStorage {
 		}
 	}
 	
+	public void destoryStorage() {
+		storage = new File("storage.dat");
+		PrintWriter pw;
+		try {
+			pw = new PrintWriter(storage);
+			pw.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("couldn't find storage file. reason: " + e.getMessage());
+		}
+	}
+	
 	
 	public List<KeyValues> readAllFromStorage() {
 		List<KeyValues> keyValuesList = new ArrayList<KeyValues>();

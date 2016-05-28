@@ -1,20 +1,22 @@
 package home.server;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import home.commons.KeyValues;
 
 import java.util.Arrays;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class KeyValuesManagerTest {
 	
 	KeyValuesStore keyValuesStore;
 	
 	@Before
-	public void setup(){
+	public void setup() {
 		keyValuesStore = new KeyValuesStore();
 	}
 	
@@ -33,5 +35,10 @@ public class KeyValuesManagerTest {
 	@Test
 	public void write() {
 		keyValuesStore.write(new KeyValues ("key2", Arrays.asList(new String[]{"1","2","3"})));
+	}
+	
+	@After
+	public void unsetup() {
+		keyValuesStore.destroy();
 	}
 }

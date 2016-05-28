@@ -4,6 +4,7 @@ import home.commons.KeyValues;
 
 import java.util.Arrays;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,5 +37,10 @@ public class KeyValuesStorageTest {
 	public void insertToStorage() {
 		KeyValues keyValues = new KeyValues("hello23", Arrays.asList(new String[]{"12","2"}));
 		keyValuesStorage.insertToStorage(keyValues);
+	}
+	
+	@After
+	public void unsetup() {
+		keyValuesStorage.destoryStorage();
 	}
 }

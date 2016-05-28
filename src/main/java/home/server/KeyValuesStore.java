@@ -43,4 +43,10 @@ public class KeyValuesStore {
 		keyValuesStorage.insertToStorage(keyValues);
 		keyValuesCache.put(keyValues.getKey(), keyValues);
 	}
+
+
+	public void destroy() {
+		keyValuesCache.clear();
+		keyValuesStorage.destoryStorage();
+	}
 }
