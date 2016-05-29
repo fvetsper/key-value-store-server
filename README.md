@@ -9,7 +9,7 @@ mvn clean install
 ### Usage
 
 ```sh
-usage : java -jar server-jar-with-dependencies.jar <port number>
+java -jar server-jar-with-dependencies.jar <port number>
 ```
 
 ### Implementation
