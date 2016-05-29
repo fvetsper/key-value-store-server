@@ -10,7 +10,7 @@ public class KeyValuesServer {
 		KeyValuesHandler keyValuesHandler = new KeyValuesHandler();
 		
 		if (args.length != 1) {
-			System.err.println("Usage: java -jar server-jar-with-dependencies.jar <port number>");
+			System.err.println("usage: java -jar server-jar-with-dependencies.jar <port number>");
 			System.exit(1);
 		}
 
