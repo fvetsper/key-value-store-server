@@ -13,7 +13,7 @@ public class KeyValuesStore {
 	private KeyValuesPersistentStorage keyValuesStorage;
 	
 	public KeyValuesStore() {
-		keyValuesCache = new HashMap<>();
+		keyValuesCache = new HashMap<String, KeyValues>();
 		keyValuesStorage = new KeyValuesPersistentStorage();
 		keyValuesStorage.createStorage();
 	}
