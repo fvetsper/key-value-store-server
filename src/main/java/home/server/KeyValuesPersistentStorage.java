@@ -32,10 +32,7 @@ public class KeyValuesPersistentStorage {
 	
 	public void destoryStorage() {
 		storage = new File("storage.dat");
-		PrintWriter pw;
-		try {
-			pw = new PrintWriter(storage);
-			pw.close();
+		try (PrintWriter pw = new PrintWriter(storage)) {
 		} catch (FileNotFoundException e) {
 			System.err.println("couldn't find storage file. reason: " + e.getMessage());
 		}
@@ -44,17 +41,12 @@ public class KeyValuesPersistentStorage {
 	
 	public Set<KeyValues> readAllFromStorage() {
 		Map<String, KeyValues> keyValuesMap = new HashMap<String, KeyValues>();
-		BufferedReader br = null;
-		try {
-			br = new BufferedReader(new FileReader(storage));
+		try (BufferedReader br = new BufferedReader(new FileReader(storage))) {
 			String line;
 			ObjectMapper mapper = new ObjectMapper();
 		    while ((line = br.readLine()) != null) {
 		    	KeyValues keyValues = mapper.readValue(line, KeyValues.class);
 		    	keyValuesMap.put(keyValues.getKey(), keyValues);
-		    }
-		    if (br != null) {
-		    	br.close();
 		    }
 		} catch (FileNotFoundException e) {
 			System.err.println("couldn't find storage file. reason: " + e.getMessage());
@@ -65,10 +57,8 @@ public class KeyValuesPersistentStorage {
 	}
 	
 	public KeyValues readFromStorage(String key) {
-		BufferedReader br = null;
 		KeyValues result = null;
-		try {
-			br = new BufferedReader(new FileReader(storage));
+		try (BufferedReader br = new BufferedReader(new FileReader(storage))){
 			String line;
 			ObjectMapper mapper = new ObjectMapper();
 		    while ((line = br.readLine()) != null) {
@@ -76,9 +66,6 @@ public class KeyValuesPersistentStorage {
 		    	if(keyValues.getKey().equals(key)) {
 		    		result = keyValues;
 		    	}
-		    }
-		    if (br != null) {
-		    	br.close();
 		    }
 		} catch (FileNotFoundException e) {
 			System.err.println("couldn't find storage file. reason: " + e.getMessage());
@@ -90,25 +77,17 @@ public class KeyValuesPersistentStorage {
 	
 	public void insertToStorage(KeyValues keyValues) {
 		ObjectMapper mapper = new ObjectMapper();
-		PrintWriter out = null;
-		try {
-			String json = mapper.writeValueAsString(keyValues);
-			
-			FileWriter fw = new FileWriter(storage, true);
+		try (FileWriter fw = new FileWriter(storage, true);
 			BufferedWriter bw = new BufferedWriter(fw);
-		    out = new PrintWriter(bw);
-		    
+		    PrintWriter out = new PrintWriter(bw)){
+			
+			String json = mapper.writeValueAsString(keyValues);
 		    out.println(json);
 			
 		} catch (JsonProcessingException e) {
 			System.err.println("couldn't process json. reason: " + e.getMessage() );
 		} catch (IOException e) {
 			System.err.println("couldn't write to storage file. reason: " + e.getMessage());
-		}
-		finally {
-			if (out != null) {
-				out.close();
-			}
 		}
 	}
 }

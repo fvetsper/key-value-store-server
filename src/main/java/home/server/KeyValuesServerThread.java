@@ -22,10 +22,8 @@ public class KeyValuesServerThread extends Thread {
 
 	public void run() {
 		ObjectMapper mapper = new ObjectMapper();
-		try {
-			
-			DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-			DataInputStream dis = new DataInputStream(socket.getInputStream());
+		try ( DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+			DataInputStream dis = new DataInputStream(socket.getInputStream())) {
 			
 			String rjson = dis.readUTF();
 			
@@ -37,9 +35,6 @@ public class KeyValuesServerThread extends Thread {
 			}
 			
 			dos.flush();
-			dos.close();
-			dis.close();
-			socket.close();
 		}
 		catch (JsonProcessingException e) {
 			System.err.println("couldn't process json. reason: " + e.getMessage() );
