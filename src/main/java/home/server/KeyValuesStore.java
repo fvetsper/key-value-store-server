@@ -19,7 +19,7 @@ public class KeyValuesStore {
 	}
 	
 	
-	public KeyValues read(String key) {
+	public synchronized KeyValues read(String key) {
 		if (keyValuesCache.containsKey(key)) {
 			return keyValuesCache.get(key);
 		} 
@@ -31,7 +31,7 @@ public class KeyValuesStore {
 		
 	}
 	
-	public Set<KeyValues> readAll() {
+	public synchronized Set<KeyValues> readAll() {
 		Set<KeyValues> keyValuesList = keyValuesStorage.readAllFromStorage();
 		for (KeyValues keyValues : keyValuesList) {
 			keyValuesCache.put(keyValues.getKey(), keyValues);
@@ -40,7 +40,7 @@ public class KeyValuesStore {
 		
 	}
 	
-	public void write(KeyValues keyValues) {
+	public synchronized void write(KeyValues keyValues) {
 		keyValuesStorage.insertToStorage(keyValues);
 		keyValuesCache.put(keyValues.getKey(), keyValues);
 	}
